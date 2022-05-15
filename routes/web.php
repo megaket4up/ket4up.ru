@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\Disk\Disk;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', ['App\Http\Controllers\HomepageController', 'index'])
     ->name('home');
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
+    Route::get('/', ['App\Http\Controllers\Dashboard\DashboardHomeController', 'index'])
+        ->name('home');
+
+    Route::resource('project', 'App\Http\Controllers\Dashboard\ProjectController');
+});
