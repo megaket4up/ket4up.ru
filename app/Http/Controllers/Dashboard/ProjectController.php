@@ -50,7 +50,9 @@ class ProjectController extends Controller
      */
     public function store(StoreProjectRequest $request)
     {
-        //
+        $project = Project::create($request->validated());
+
+        return redirect(route('dashboard.project.show', [$project]));
     }
 
     /**
@@ -61,7 +63,9 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return View::make('dashboard.project.show');
+        return View::make('dashboard.project.show', [
+            'project' => $project
+        ]);
     }
 
     /**
@@ -72,7 +76,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return View::make('dashboard.project.edit');
+        return View::make('dashboard.project.edit', [
+            'project' => $project
+        ]);
     }
 
     /**
@@ -84,7 +90,9 @@ class ProjectController extends Controller
      */
     public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $project->update($request->validated());
+
+        return redirect(route('dashboard.project.show', [$project]));
     }
 
     /**
@@ -95,6 +103,6 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+        $project->delete();
     }
 }

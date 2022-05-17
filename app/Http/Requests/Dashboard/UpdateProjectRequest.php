@@ -7,13 +7,20 @@ use Illuminate\Foundation\Http\FormRequest;
 class UpdateProjectRequest extends FormRequest
 {
     /**
+     * Маршрут, на который следует перенаправлять пользователей в случае сбоя проверки.
+     *
+     * @var string
+     */
+    protected $redirectRoute = 'dashboard.project.show';
+
+    /**
      * Determine if the user is authorized to make this request.
      *
      * @return bool
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +31,22 @@ class UpdateProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'active' => 'required|boolean'
+        ];
+    }
+
+
+    /**
+     * Получить сообщения об ошибках для определенных правил валидации.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => 'Нужно название',
         ];
     }
 }
